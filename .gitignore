@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+
+# Heavy data / generated outputs - keep these in Google Drive, not GitHub
+data/
+processed/
+models/
+outputs/
+runs/
+logs/
+wandb/
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.bvh
+*.pkl
+*.pickle
+*.tar
+*.tar.gz
+*.zip
+
+# OS/editor
+.DS_Store
+.vscode/
