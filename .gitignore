@@ -28,3 +28,4 @@ wandb/
 # OS/editor
 .DS_Store
 .vscode/
+external/project645/
