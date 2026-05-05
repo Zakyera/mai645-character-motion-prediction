@@ -6,7 +6,7 @@ This repository contains the MAI 645 final project scaffold for comparing three 
 2. Euler angle representation
 3. Quaternion representation
 
-The assignment handout in `/home/yeranis/Downloads/mai645/final_project_645.pdf` names the required scripts, but the original GitHub repository link and BVH dataset path are still unknown. Those locations are marked with `TODO` placeholders in the notebook and command examples below.
+The assignment handout names the required scripts, but the original GitHub repository link and BVH dataset path are still unknown. Those locations are marked with `TODO` placeholders in the notebook and command examples below.
 
 ## Repository Layout
 
