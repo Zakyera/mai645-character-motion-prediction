@@ -4,6 +4,7 @@ import torch.nn as nn
 from torch.autograd import Variable
 import numpy as np
 import random
+import argparse
 import read_bvh
 
 Hip_index = read_bvh.joint_index['hip']
@@ -174,7 +175,7 @@ def load_dances(dance_folder):
     return dances
     
 # dances: [dance1, dance2, dance3,....]
-def test(dance_batch_np, frame_rate, batch, initial_seq_len, generate_frames_number, read_weight_path,
+def test(dances, frame_rate, batch, initial_seq_len, generate_frames_number, read_weight_path,
          write_bvh_motion_folder, in_frame_size=171, hidden_size=1024, out_frame_size=171):
     
     torch.cuda.set_device(0)
@@ -210,22 +211,48 @@ def test(dance_batch_np, frame_rate, batch, initial_seq_len, generate_frames_num
     # Generate the next steps
     generate_seq(dance_batch_np, generate_frames_number, model, write_bvh_motion_folder)
 
-read_weight_path=""
-write_bvh_motion_folder = ""
-dances_folder = ""
-dance_frame_rate = 60
-batch = 5
-initial_seq_len = 15
-generate_frames_number = 400
+def ensure_trailing_slash(path):
+    return path if path.endswith("/") else path + "/"
 
-if not os.path.exists(write_bvh_motion_folder):
-    os.makedirs(write_bvh_motion_folder)
 
-dances = load_dances(dances_folder)
+def main():
+    parser = argparse.ArgumentParser(description="Synthesize positional motion using a trained acLSTM model.")
 
-in_frame_size = 171
-hidden_size = 1024
-out_frame_size = 171
+    parser.add_argument("--dances_folder", type=str, required=True,
+                        help="Folder containing positional .npy motion files.")
+    parser.add_argument("--read_weight_path", type=str, required=True,
+                        help="Path to trained model checkpoint.")
+    parser.add_argument("--write_bvh_motion_folder", type=str, required=True,
+                        help="Folder where generated BVH files will be written.")
+    parser.add_argument("--dance_frame_rate", type=int, default=60)
+    parser.add_argument("--batch_size", type=int, default=5)
+    parser.add_argument("--initial_seq_len", type=int, default=15)
+    parser.add_argument("--generate_frames_number", type=int, default=400)
+    parser.add_argument("--in_frame", type=int, default=171)
+    parser.add_argument("--hidden_size", type=int, default=1024)
+    parser.add_argument("--out_frame", type=int, default=171)
 
-test(dances, dance_frame_rate, batch, initial_seq_len, generate_frames_number, read_weight_path,
-     write_bvh_motion_folder, in_frame_size, hidden_size, out_frame_size)
+    args = parser.parse_args()
+
+    dances_folder = ensure_trailing_slash(args.dances_folder)
+    write_bvh_motion_folder = ensure_trailing_slash(args.write_bvh_motion_folder)
+
+    if not os.path.exists(write_bvh_motion_folder):
+        os.makedirs(write_bvh_motion_folder)
+
+    dances = load_dances(dances_folder)
+
+    test(dances,
+         args.dance_frame_rate,
+         args.batch_size,
+         args.initial_seq_len,
+         args.generate_frames_number,
+         args.read_weight_path,
+         write_bvh_motion_folder,
+         args.in_frame,
+         args.hidden_size,
+         args.out_frame)
+
+
+if __name__ == "__main__":
+    main()
