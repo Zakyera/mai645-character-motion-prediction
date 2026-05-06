@@ -29,3 +29,6 @@ wandb/
 .DS_Store
 .vscode/
 external/project645/
+
+# Local Python environment
+.venv/
