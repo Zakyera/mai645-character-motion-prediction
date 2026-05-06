@@ -32,3 +32,16 @@ external/project645/
 
 # Local Python environment
 .venv/
+
+# Generated data and model outputs
+train_data_bvh
+train_data_pos/
+reconstructed_bvh_data_pos/
+weights_pos_test*/
+bvh_pos_test*/
+*.npy
+*.npz
+*.weight
+*.pt
+*.pth
+*.bvh
