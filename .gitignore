@@ -45,3 +45,7 @@ bvh_pos_test*/
 *.pt
 *.pth
 *.bvh
+
+# Evaluation outputs
+results/smoke_eval/
+results/final_eval/
