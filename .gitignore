@@ -49,3 +49,18 @@ bvh_pos_test*/
 # Evaluation outputs
 results/smoke_eval/
 results/final_eval/
+
+# Evaluation outputs
+results/smoke_eval/
+results/final_eval/
+results/stage1_eval/
+results/stage2_eval/
+results/stage3_eval/
+
+# Training logs
+logs/
+
+# Final/staged model outputs
+weights_*_stage*/
+bvh_*_stage*/
+generated_*_stage*/
