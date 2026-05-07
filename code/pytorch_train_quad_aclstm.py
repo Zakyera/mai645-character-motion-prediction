@@ -134,12 +134,12 @@ def train_one_iteraton(real_seq_np, model, optimizer, iteration, save_dance_fold
     real_seq_dif_hip_x_z_np[:,:,Hip_index*3]=dif[:,:,Hip_index*3]
     real_seq_dif_hip_x_z_np[:,:,Hip_index*3+2]=dif[:,:,Hip_index*3+2]
 
-    real_seq = torch.autograd.Variable(torch.FloatTensor(real_seq_dif_hip_x_z_np.tolist()).cuda())
+    real_seq = torch.autograd.Variable(torch.from_numpy(real_seq_dif_hip_x_z_np).float().cuda())
  
     seq_len=real_seq.size()[1]-1
     in_real_seq=real_seq[:, 0:seq_len]
 
-    predict_groundtruth_seq = torch.autograd.Variable(torch.FloatTensor(real_seq_dif_hip_x_z_np[:, 1:seq_len+1].tolist())).cuda().view(real_seq_np.shape[0], -1)
+    predict_groundtruth_seq = torch.autograd.Variable(torch.from_numpy(real_seq_dif_hip_x_z_np[:, 1:seq_len+1]).float().cuda()).view(real_seq_np.shape[0], -1)
     
     predict_seq = model.forward(in_real_seq, Condition_num, Groundtruth_num)
     
@@ -257,11 +257,9 @@ def train(dances, frame_rate, batch, seq_len, read_weight_path, write_weight_fol
             for i in range(seq_len):
                 sample_seq=sample_seq+[dance[int(i*speed+start_id)]]
             
-            # augment the direction and position of the dance, helps the model to not overfeed
-            T=[0.1*(random.random()-0.5),0.0, 0.1*(random.random()-0.5)]
-            R=[0,1,0,(random.random()-0.5)*np.pi*2]
-            sample_seq_augmented=read_bvh.augment_train_data(sample_seq, T, R)
-            dance_batch=dance_batch+[sample_seq_augmented]
+            # Euler/quaternion representations are not XYZ positions.
+            # Positional augmentation is not valid here, so use sampled sequence directly.
+            dance_batch.append(sample_seq)
         dance_batch_np=np.array(dance_batch)
        
         

@@ -119,12 +119,12 @@ def train_one_iteraton(real_seq_np, model, optimizer, iteration, save_dance_fold
     real_seq_dif_hip_x_z_np[:,:,Hip_index*3]=dif[:,:,Hip_index*3]
     real_seq_dif_hip_x_z_np[:,:,Hip_index*3+2]=dif[:,:,Hip_index*3+2]
 
-    real_seq = torch.autograd.Variable(torch.FloatTensor(real_seq_dif_hip_x_z_np.tolist()).cuda())
+    real_seq = torch.autograd.Variable(torch.from_numpy(real_seq_dif_hip_x_z_np).float().cuda())
  
     seq_len=real_seq.size()[1]-1
     in_real_seq=real_seq[:, 0:seq_len]
 
-    predict_groundtruth_seq = torch.autograd.Variable(torch.FloatTensor(real_seq_dif_hip_x_z_np[:, 1:seq_len+1].tolist())).cuda().view(real_seq_np.shape[0], -1)
+    predict_groundtruth_seq = torch.autograd.Variable(torch.from_numpy(real_seq_dif_hip_x_z_np[:, 1:seq_len+1]).float().cuda()).view(real_seq_np.shape[0], -1)
     
     predict_seq = model.forward(in_real_seq, Condition_num, Groundtruth_num)
     
