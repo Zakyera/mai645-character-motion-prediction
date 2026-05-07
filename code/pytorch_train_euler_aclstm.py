@@ -273,6 +273,10 @@ def train(dances, frame_rate, batch, seq_len, read_weight_path, write_weight_fol
             
         train_one_iteraton(dance_batch_np, model, optimizer, iteration, write_bvh_motion_folder, print_loss, save_bvh_motion)
 
+    final_path = write_weight_folder + "%07d" % total_iter + ".weight"
+    torch.save(model.state_dict(), final_path)
+    print("Saved final checkpoint: " + final_path)
+
 
 def main():
 
