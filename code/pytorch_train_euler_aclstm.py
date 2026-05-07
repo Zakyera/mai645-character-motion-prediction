@@ -50,8 +50,8 @@ class acLSTM(nn.Module):
     def forward_lstm(self, in_frame, vec_h, vec_c):
 
         vec_h0,vec_c0=self.lstm1(in_frame, (vec_h[0],vec_c[0]))
-        vec_h1,vec_c1=self.lstm2(vec_h[0], (vec_h[1],vec_c[1]))
-        vec_h2,vec_c2=self.lstm3(vec_h[1], (vec_h[2],vec_c[2]))
+        vec_h1,vec_c1=self.lstm2(vec_h0, (vec_h[1],vec_c[1]))
+        vec_h2,vec_c2=self.lstm3(vec_h1, (vec_h[2],vec_c[2]))
      
         out_frame = self.decoder(vec_h2) #out b*150
         vec_h_new=[vec_h0, vec_h1, vec_h2]
