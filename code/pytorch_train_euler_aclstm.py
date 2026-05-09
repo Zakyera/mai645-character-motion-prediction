@@ -216,7 +216,7 @@ def load_dances(dance_folder):
     
 # dances: [dance1, dance2, dance3,....]
 def train(dances, frame_rate, batch, seq_len, read_weight_path, write_weight_folder,
-          write_bvh_motion_folder, in_frame, out_frame, hidden_size=1024, total_iter=500000):
+          write_bvh_motion_folder, in_frame, out_frame, hidden_size=1024, total_iter=500000, save_every=1000):
     
     seq_len=seq_len+2
     torch.cuda.set_device(0)
@@ -264,7 +264,7 @@ def train(dances, frame_rate, batch, seq_len, read_weight_path, write_weight_fol
         save_bvh_motion=False
         if(iteration % 20==0):
             print_loss=True
-        if(iteration % 1000==0):
+        if(iteration % save_every==0):
             save_bvh_motion=True
             path = write_weight_folder + "%07d"%iteration +".weight"
             torch.save(model.state_dict(), path)
@@ -291,6 +291,7 @@ def main():
     parser.add_argument('--hidden_size', type=int, default=1024, help='Checkpoint model path')
     parser.add_argument('--seq_len', type=int, default=100, help='Checkpoint model path')
     parser.add_argument('--total_iterations', type=int, default=100000, help='Checkpoint model path')
+    parser.add_argument('--save_every', type=int, default=1000, help='Save checkpoint/BVH every N iterations')
 
     args = parser.parse_args()
 
@@ -303,7 +304,7 @@ def main():
     dances= load_dances(args.dances_folder)
 
     train(dances, args.dance_frame_rate, args.batch_size, args.seq_len, args.read_weight_path, args.write_weight_folder,
-          args.write_bvh_motion_folder, args.in_frame, args.out_frame, args.hidden_size, total_iter=args.total_iterations)
+          args.write_bvh_motion_folder, args.in_frame, args.out_frame, args.hidden_size, total_iter=args.total_iterations, save_every=args.save_every)
 
 if __name__ == '__main__':
     main()
