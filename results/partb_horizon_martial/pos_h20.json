@@ -1,0 +1,18 @@
+{
+  "representation": "pos",
+  "dances_folder": "train_data_pos/martial/",
+  "read_weight_path": "weights_pos_stage100k/0100000.weight",
+  "in_frame": 171,
+  "out_frame": 171,
+  "hidden_size": 1024,
+  "batch_size": 8,
+  "initial_seq_len": 20,
+  "eval_frames": 20,
+  "trials": 20,
+  "mse_mean": 0.00046675756455265256,
+  "mse_std": 0.0001720123588748229,
+  "rmse_mean": 0.021191146622584832,
+  "rmse_std": 0.004206289264038302,
+  "mae_mean": 0.012057414750726662,
+  "mae_std": 0.0018449795153677225
+}

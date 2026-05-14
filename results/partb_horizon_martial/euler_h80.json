@@ -1,0 +1,18 @@
+{
+  "representation": "euler",
+  "dances_folder": "train_data_euler/martial/",
+  "read_weight_path": "weights_euler_stage100k/0100000.weight",
+  "in_frame": 132,
+  "out_frame": 132,
+  "hidden_size": 1024,
+  "batch_size": 8,
+  "initial_seq_len": 20,
+  "eval_frames": 80,
+  "trials": 20,
+  "mse_mean": 44.70842813324585,
+  "mse_std": 38.71723326004611,
+  "rmse_mean": 6.11026352928665,
+  "rmse_std": 2.7153467063922614,
+  "mae_mean": 0.9109569858006223,
+  "mae_std": 0.4877838167722678
+}

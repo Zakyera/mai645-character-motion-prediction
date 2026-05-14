@@ -1,0 +1,18 @@
+{
+  "representation": "quad",
+  "dances_folder": "train_data_quad/martial/",
+  "read_weight_path": "weights_quad_stage100k/0100000.weight",
+  "in_frame": 175,
+  "out_frame": 175,
+  "hidden_size": 1024,
+  "batch_size": 8,
+  "initial_seq_len": 20,
+  "eval_frames": 80,
+  "trials": 20,
+  "mse_mean": 0.0007847927034053128,
+  "mse_std": 0.0006358284672962078,
+  "rmse_mean": 0.0257688602407102,
+  "rmse_std": 0.010989019305654971,
+  "mae_mean": 0.004623258579611858,
+  "mae_std": 0.001725446245507657
+}
