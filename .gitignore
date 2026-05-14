@@ -64,3 +64,10 @@ logs/
 weights_*_stage*/
 bvh_*_stage*/
 generated_*_stage*/
+
+# Local result/video outputs
+results/salsa100k_eval/
+results/stage100k_eval/
+results/stage100k_preview/
+results/indian100k_eval/
+videos/
