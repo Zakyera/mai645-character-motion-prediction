@@ -102,10 +102,27 @@ class acLSTM(nn.Module):
     #cuda tensor out_seq batch*(seq_len*frame_size)
     #cuda tensor groundtruth_seq batch*(seq_len*frame_size) 
     def calculate_loss(self, out_seq, groundtruth_seq):
-        
-        loss_function = nn.MSELoss()
-        loss = loss_function(out_seq, groundtruth_seq)
-        return loss
+      batch = groundtruth_seq.size(0)
+      frame_size = self.out_frame_size
+
+      pred = out_seq.view(batch, -1, frame_size)
+      target = groundtruth_seq.view(batch, -1, frame_size)
+
+      root_loss = nn.MSELoss()(pred[:, :, 0:3], target[:, :, 0:3])
+
+      pred_quat = pred[:, :, 3:].view(batch, -1, 4)
+      target_quat = target[:, :, 3:].view(batch, -1, 4)
+
+      pred_quat = pred_quat / torch.clamp(torch.norm(pred_quat, dim=2, keepdim=True), min=1e-8)
+      target_quat = target_quat / torch.clamp(torch.norm(target_quat, dim=2, keepdim=True), min=1e-8)
+
+      dot = torch.sum(pred_quat * target_quat, dim=2)
+      dot = torch.clamp(torch.abs(dot), max=1.0)
+
+      quat_loss = torch.mean(2.0 * torch.acos(dot))
+
+      return root_loss + quat_loss
+
 
 
 def write_quad_traindata_to_bvh(bvh_filename, quad_train_data):
