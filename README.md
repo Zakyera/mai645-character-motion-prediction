@@ -14,12 +14,14 @@
   python code/pytorch_train_pos_aclstm.py
   python code/pytorch_train_euler_aclstm.py
   python code/pytorch_train_quad_aclstm.py
+  ```
 
   ## Synthesis Scripts
 
   python code/synthise_pos_motion.py
   python code/synthise_euler_motion.py
   python code/synthise_quad_motion.py
+  ```
 
   ## Loss Functions
 
