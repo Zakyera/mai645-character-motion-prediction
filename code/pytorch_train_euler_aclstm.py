@@ -101,10 +101,19 @@ class acLSTM(nn.Module):
     #cuda tensor out_seq batch*(seq_len*frame_size)
     #cuda tensor groundtruth_seq batch*(seq_len*frame_size) 
     def calculate_loss(self, out_seq, groundtruth_seq):
-        
-        loss_function = nn.MSELoss()
-        loss = loss_function(out_seq, groundtruth_seq)
-        return loss
+      batch = groundtruth_seq.size(0)
+      frame_size = self.out_frame_size
+
+      pred = out_seq.view(batch, -1, frame_size)
+      target = groundtruth_seq.view(batch, -1, frame_size)
+
+      root_loss = nn.MSELoss()(pred[:, :, 0:3], target[:, :, 0:3])
+
+      angle_delta_rad = (pred[:, :, 3:] - target[:, :, 3:]) * 3.141592653589793 / 180.0
+      angle_loss = torch.mean(1.0 - torch.cos(angle_delta_rad))
+
+      return root_loss + angle_loss
+
 
 
 def write_euler_traindata_to_bvh(bvh_filename, euler_train_data):
