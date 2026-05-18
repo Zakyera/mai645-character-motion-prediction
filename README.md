@@ -18,6 +18,7 @@
 
   ## Synthesis Scripts
 
+  ```bash
   python code/synthise_pos_motion.py
   python code/synthise_euler_motion.py
   python code/synthise_quad_motion.py
@@ -25,5 +26,4 @@
 
   ## Loss Functions
 
-  The positional model uses MSE over all joint-position channels. The Euler-angle model uses MSE for the root translation and angle-distance loss for the joint rotations. The quaternion model uses MSE for the root translation and quaternion angular loss
-  for the joint rotations.
+  The positional model uses MSE over all joint-position channels. The Euler-angle model uses MSE for the root translation and angle-distance loss for the joint rotations. The quaternion model uses MSE for the root translation and quaternion angular loss for the joint rotations.
